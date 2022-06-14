@@ -1,4 +1,4 @@
-import {createStore, combineReducers} from 'redux'
+// import {createStore, combineReducers} from 'redux'
 import {createSlice, configureStore} from '@reduxjs/toolkit'
 
 const initialState = {counter: 0, showCounter: true}
@@ -14,17 +14,32 @@ const counterSlice = createSlice({
             state.counter--
         },
         increase(state, action) {
-            state.counter = state.counter + action.amount
+            state.counter = state.counter + action.payload
+                // must use payload as the name of the porperty
         },
         toggleCounter(state) {
             state.showCounter = !state.showCounter
         }
     }
 })
-// preparing a 'slice' of the global state
-// reducers are all the reducers this slice needs
-// don't need if checks and or action as a param
-// allowed to "mutate" state within a slice, but otherwise should not (should use return to copy & replace state)- Redux toolkit uses imgur will detect state.counter, clone the existing state, create a new state object, and then override the state that's being editing- not actually mutating state
+    // preparing a 'slice' of the global state
+    // reducers are all the reducers this slice needs
+    // don't need if checks and or action as a param
+    // allowed to "mutate" state within a slice, but otherwise should not (should use return to copy & replace state)- Redux toolkit uses imgur will detect state.counter, clone the existing state, create a new state object, and then override the state that's being editing- not actually mutating state
+
+const store = configureStore({
+    reducer: {
+        counter: counterSlice.reducer
+        // other "name: reducer" pairs can be added
+    }
+})
+// configureStore makes merging multiple reducers into one reducer easy b/c only one reducer can be passed
+
+export const counterActions = counterSlice.actions
+// actions already named within counterSlice (ie. increment)
+
+export default store
+
 
 
 // -----------------------------------------------------
@@ -63,15 +78,4 @@ const counterSlice = createSlice({
 
 // const store = createStore(counterReducer)
 
-
-
-const store = configureStore({
-    reducer: {
-        counter: counterSlice.reducer
-        // other "name: reducer" pairs can be added
-    }
-})
-// configureStore makes merging multiple reducers into one reducer easy b/c only one reducer can be passed
-
-
-export default store
+// export default store
