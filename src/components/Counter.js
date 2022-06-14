@@ -4,14 +4,14 @@ import {counterActions} from '../store/index'
 
 function Counter() {
 
-    const counter = useSelector(state => state.counter)
+    const counter = useSelector(state => state.counter.counter)
     // params: state managed by redux, return the state you want to extract
     // using useSelector automatically sets up a subscription to the Redux store for this component; component will be updated whenever the data changes in the Redux store
 
     const dispatch = useDispatch()
     // dispatch is now a function you can call to dispatch an action against the Redux store
 
-    const show = useSelector(state => state.showCounter)    
+    const show = useSelector(state => state.counter.showCounter)    
 
     const incrementHandler = () => {
         // dispatch({type: 'increment'})  ---deprecated

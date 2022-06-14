@@ -1,11 +1,11 @@
 // import {createStore, combineReducers} from 'redux'
 import {createSlice, configureStore} from '@reduxjs/toolkit'
 
-const initialState = {counter: 0, showCounter: true}
+const initialCounterState = {counter: 0, showCounter: true}
 
 const counterSlice = createSlice({
     name: 'counter',
-    initialState: initialState,
+    initialState: initialCounterState,
     reducers: {
         increment(state) {
             state.counter++
@@ -27,9 +27,27 @@ const counterSlice = createSlice({
     // don't need if checks and or action as a param
     // allowed to "mutate" state within a slice, but otherwise should not (should use return to copy & replace state)- Redux toolkit uses imgur will detect state.counter, clone the existing state, create a new state object, and then override the state that's being editing- not actually mutating state
 
+const intialAuthState = {
+    isAuthenticates: false
+}
+
+const authSlice = createSlice({
+    name: 'auth',
+    initialState: intialAuthState,
+    reducers: {
+        login(state) {
+            state.isAuthenticated = true
+        },
+        logout(state) {
+            state.isAuthenticated = false
+        }
+    }
+})
+
 const store = configureStore({
     reducer: {
-        counter: counterSlice.reducer
+        counter: counterSlice.reducer,
+        auth: authSlice.reducer
         // other "name: reducer" pairs can be added
     }
 })
@@ -37,6 +55,8 @@ const store = configureStore({
 
 export const counterActions = counterSlice.actions
 // actions already named within counterSlice (ie. increment)
+
+export const authActions = authSlice.actions
 
 export default store
 
