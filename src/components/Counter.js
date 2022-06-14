@@ -10,6 +10,8 @@ function Counter() {
     const dispatch = useDispatch()
     // dispatch is now a function you can call to dispatch an action against the Redux store
 
+    const show = useSelector(state => state.showCounter)    
+
     const incrementHandler = () => {
         dispatch({type: 'increment'})
     }
@@ -19,14 +21,15 @@ function Counter() {
         // add the action (amount) as the second property
     const decrementHandler = () => {
         dispatch({type: 'decrement'})
+    }    
+    const toggleCounterHandler = () => {
+        dispatch({type: 'toggle'})
     }
-    
-    const toggleCounterHandler = () => { }
 
     return (
         <main className={classes.counter}>
             <h1>Redux Counter</h1>
-            <div className={classes.value}>{counter}</div>
+            {show && <div className={classes.value}>{counter}</div>}
             <div>
                 <button onClick={incrementHandler}>Increment</button>
                 <button onClick={increaseHandler}>Increase by 5</button>
